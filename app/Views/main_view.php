@@ -9,18 +9,6 @@
 
 </head>
 <body>
-	<!-- <div class="car-search row">
-		<div class="col-md-4">
-			<div class="row">
-				<div class="col-md-4">
-					<h4>Year Search:</h4>
-				</div>
-				<div class="col-md-8">
-					<input id="search_year" onkeyup="yearsearch()" type="number" class="form-control input-sm year-search" />
-				</div>
-			</div>
-		</div>
-	</div> -->
 	<div class="car-search" style="display: flex; width: 41.27%; padding:10px">
 		<h5 style="width: 25%;">
 			Year Search:
@@ -55,9 +43,7 @@
 	function carlist() {
 		var companyId = "#"+event.target.id;
 		var companyName = $(companyId).text();
-		// $(companyId).toggleClass("active");
 		$.ajax({
-			// url: "http://localhost:8080/CodeIgniter4/public/index.php/home/getCarList",
 			url: "<?php echo base_url('CodeIgniter4/public/index.php/home/getCarList')?>",
 			type: 'POST',
 			dataType:'json',
@@ -80,7 +66,6 @@
 	function cardata() {
 		var carModelId = event.target.id;
 		$.ajax({
-			// url: "http://localhost:8080/CodeIgniter4/public/index.php/home/getCarList",
 			url: "<?php echo base_url('CodeIgniter4/public/index.php/home/getCarData')?>",
 			type: 'POST',
 			dataType:'json',
@@ -95,7 +80,7 @@
 						"<p class='price'>price:$20</p>"+
 						"<p>year:"+data[0].year+"</p>"+
 						"<p>company:"+data[0].company+"</p>"+
-						"<a href='<?php echo base_url('CodeIgniter4/public/index.php/stripContoller'); ?>'><button class='btn btn-primary'>Buy</button></a>"+
+						"<a href='<?php echo base_url('CodeIgniter4/public/index.php/Stripe'); ?>'><button id="+data[0].id+" onclick='buyData()' class='btn btn-primary'>Buy</button></a>"+
 					"</div>";
 				$("#car_detail").html(car_detail);
 			}
@@ -118,16 +103,21 @@
 					var row = "<tr><td onclick='carlist()' id="+data[i]['company']+">"+data[i]['company']+"</td></tr>";
 					rowData.push(row);
 				}
-				// var table = "<table id='campanylist' class='table table-striped table-bordered'>"+
-				// 	"<thead>"+
-				// 		"<tr><th>CAR CAMPANY</th></tr>"+
-				// 	"</thead>"+
-				// 	"<tbody>"+
-				// 		rowData
-				// 	"</tbody>"+
-				// "</table>";
-				// $("#retable").html(table);
 				$("#company_list_tr").html(rowData)
+			}
+		});
+	}
+
+	function buyData() {
+		buyCarId = event.target.id;
+		$.ajax({
+			url: "<?php echo base_url('CodeIgniter4/public/index.php/home/buyDataInsert')?>",
+			type: 'POST',
+			dataType:'json',
+			data : {
+				buyCarId : buyCarId,
+			},
+			success:function(data){
 			}
 		});
 	}

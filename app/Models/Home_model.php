@@ -68,5 +68,32 @@ class Home_model extends Model {
 
 		return $ary;
 	}
+
+	public function insert_buy_car_data($buyCarId) {
+		$db = db_connect();
+		$query = $db->query('SELECT year, company_name, car_model FROM car_data WHERE id="'.$buyCarId.'"');
+		$results = $query->getResult();
+		$car_name = $results[0]->car_model;
+		$car_company = $results[0]->company_name;
+		$year = $results[0]->year;
+		$db->query('UPDATE car_bucket_data SET car_name = "'.$car_name.'", car_company = "'.$car_company.'", year = "'.$year.'" WHERE id = 1');
+	}
+
+	public function get_buy_data() {
+		$db = db_connect();
+		$query = $db->query('SELECT id, year, car_name, car_company FROM car_bucket_data');
+		$results = $query->getResult();
+		$ary = array();
+		$rows = [];
+		foreach($results as $row) {
+			$rows['id'] = $row->id;
+			$rows['year'] = $row->year;
+			$rows['company'] = $row->car_company;
+			$rows['name'] = $row->car_name;
+			array_push($ary, $rows);
+		}
+
+		return $ary;
+	}
 }
 ?>

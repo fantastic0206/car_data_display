@@ -25,7 +25,6 @@ class Home extends BaseController
 		$data = $this->home_model->get_car_model($companyName);
 
 		echo json_encode($data);
-
 	}
 
 	public function getCarData() {
@@ -40,5 +39,10 @@ class Home extends BaseController
 		$data = $this->home_model->get_year_data($yearSearch);
 
 		echo json_encode($data);
+	}
+
+	public function buyDataInsert() {
+		$buyCarId = $_POST['buyCarId'];
+		$this->home_model->insert_buy_car_data($buyCarId);
 	}
 }

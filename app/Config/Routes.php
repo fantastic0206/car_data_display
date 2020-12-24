@@ -34,7 +34,7 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
-$routes->get('(:any)', 'StripController::index');
+$routes->get('(:any)', 'Stripe::index');
 // $routes->post('/getCarList','Home::getCarList');
 /*
  * --------------------------------------------------------------------
